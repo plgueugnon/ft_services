@@ -10,7 +10,10 @@ echo "\033[32mStarting to build - please wait while docker images are being buil
 #touch log.txt
 docker build -t localbaseimage srcs/base/
 docker build -t nginx srcs/nginx/
+docker build -t wordpress srcs/wordpress
 echo "\033[32mBuild finished\033[0m"
 
-docker run --name nginx -d -p 80:80 -p 443:443 nginx
-docker exec -it nginx sh
+#docker run --name nginx -d -p 80:80 -p 443:443 nginx
+#docker exec -it nginx sh
+docker run --name wordpress -d -p 5050:5050 -p 80:80 wordpress
+docker exec -it wordpress sh
