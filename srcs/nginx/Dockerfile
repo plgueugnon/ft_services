@@ -1,4 +1,4 @@
-FROM localbaseimage
+FROM customlocalalpine
 # We get a copy of a custom alpine image created just before
 
 # PID directory /run/nginx must be created in order to launch nginx
@@ -8,7 +8,12 @@ RUN apk update && apk add nginx \
 && apk add openssl \
 && openssl req -newkey rsa:4096 -sha256 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.pem -keyout /etc/ssl/private/key.pem -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=pgueugno/CN=localhost" \
 && apk del --purge \
-&& rm -rf /var/lib/apk/lists/*
+&& rm -rf /var/lib/apk/lists/* \
+&& rm -f /sbin/apk \
+&& rm -rf /etc/apk \
+&& rm -rf /lib/apk \
+&& rm -rf /usr/share/apk \
+&& rm -rf /var/lib/apk
 
 # Copy  1-custom nginx welcome page
 #       2-nginx server conf file specifying rules for all webpages

@@ -6,10 +6,11 @@ FROM customlocalalpine
 RUN apk update && apk add nginx \
 && apk add  php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session composer \
 && mkdir -p /run/nginx \
-&& mkdir -p /var/www/localhost/wordpress \
-&& wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-&& chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp \
-&& wp core download --path=/var/www/localhost/wordpress/ --allow-root \
+&& mkdir -p /var/www/localhost \
+&& wget -P /tmp/ https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
+&& tar -xzvf /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz -C /tmp/ \
+&& mv /tmp/phpMyAdmin-4.9.0.1-all-languages var/www/localhost/phpmyadmin \
+&& rm /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
 && apk del wget \
 && rm -rf /var/lib/apk/lists/* \
 && rm -f /sbin/apk \
@@ -18,11 +19,8 @@ RUN apk update && apk add nginx \
 && rm -rf /usr/share/apk \
 && rm -rf /var/lib/apk
 
-# Copy nginx server conf file specifying rules for all webpages
-COPY ./wordpress.conf /etc/nginx/http.d/
-COPY ./wp_init.sh /tmp/
-RUN chmod +x /tmp/wp_init.sh
+COPY ./phpmyadmin.conf /etc/nginx/http.d/
 
-EXPOSE 5050
-RUN sh /tmp/wp_init.sh
-CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
+EXPOSE 5000
+RUN php-fpm7
+CMD ["nginx", "-g", "daemon off;"]
