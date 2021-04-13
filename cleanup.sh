@@ -1,10 +1,10 @@
-#!/bin/bash/
+#!/bin/bash
 
-docker kill $(docker ps -qa)
-docker rm $(docker ps -qa)
+docker kill "$(docker ps -qa)"
+docker rm "$(docker ps -qa)"
 #docker rmi alpine
 #docker rmi nginx
-docker rmi $(docker images -qa)
+docker rmi "$(docker images -qa)"
 
 #Debug
 #sudo groupadd docker 
@@ -30,3 +30,5 @@ docker rmi $(docker images -qa)
 
 # Logs
 #docker log [containername]
+#tail -f /proc/<pid>/fd/1
+#tail -f /proc/<pid>/fd/2
