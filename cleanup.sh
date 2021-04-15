@@ -1,10 +1,10 @@
 #!/bin/bash
 
-docker kill "$(docker ps -qa)"
-docker rm "$(docker ps -qa)"
+docker kill $(docker ps -qa)
+docker rm $(docker ps -qa)
 #docker rmi alpine
 #docker rmi nginx
-docker rmi "$(docker images -qa)"
+docker rmi $(docker images -a)
 
 #Debug
 #sudo groupadd docker 

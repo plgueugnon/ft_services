@@ -23,6 +23,12 @@ COPY ./wordpress.conf /etc/nginx/http.d/
 COPY ./wp_init.sh /tmp/
 RUN chmod +x /tmp/wp_init.sh
 
+#RUN wp core download --path=/var/www/localhost/wordpress/ --allow-root
+
 EXPOSE 5050
+#RUN php-fpm7 
+#RUN nginx
 RUN sh /tmp/wp_init.sh
-CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
+#CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
+#CMD sh /tmp/wp_init.sh 
+CMD sleep infinity

@@ -2,7 +2,7 @@ FROM customlocalalpine
 # We get a copy of a custom alpine image created just before
 
 RUN apk add mariadb mariadb-common mariadb-client \
-&& mkdir -p /run/mysqld \
+#&& mkdir -p /run/mysqld \
 && apk del wget \
 && rm -rf /var/lib/apk/lists/* \
 && rm -f /sbin/apk \
@@ -11,10 +11,13 @@ RUN apk add mariadb mariadb-common mariadb-client \
 && rm -rf /usr/share/apk \
 && rm -rf /var/lib/apk
 
-COPY ./sql_init.sh /tmp/
-RUN chmod +x /tmp/sql_init.sh
+COPY ./sql_init.sh .
+RUN chmod +x /sql_init.sh
+
+#COPY ./init_db.sh .
+#RUN chmod +x /init_db.sh
 
 EXPOSE 3306
-RUN sh /tmp/sql_init.sh
-CMD sleep infinity
-#CMD sh /tmp/sql_init.sh
+#RUN sh ./sql_init.sh
+#CMD sleep infinity
+CMD ./sql_init.sh
