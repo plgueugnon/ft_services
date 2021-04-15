@@ -18,6 +18,5 @@ RUN chmod +x /sql_init.sh
 #RUN chmod +x /init_db.sh
 
 EXPOSE 3306
-#RUN sh ./sql_init.sh
 #CMD sleep infinity
 CMD ./sql_init.sh

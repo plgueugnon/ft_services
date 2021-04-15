@@ -10,7 +10,7 @@ sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cn
 /usr/bin/mysql_install_db --user=mysql --datadir="/var/lib/mysql"
 
 # Launch mysql in safe mode and exit right after 
-/usr/bin/mysqld_safe --datadir=/var/lib/mysql --no-watch
+/usr/bin/mysqld_safe --datadir=/var/lib/mysql #--no-watch
 
 # We wait until mysql is up - then we will be able to config it
 until echo "show databases;" | mysql -u root
@@ -31,5 +31,5 @@ echo "SET GLOBAL general_log_file='/tmp/sql.log';" | mysql -u root
 echo "SET GLOBAL general_log = 'ON';" | mysql -u root
 #ln -sf /dev/stdout /var/log/sql.log
 
-tail -F /tmp/sql.log
+#tail -F /tmp/sql.log
 #mysqld -u root

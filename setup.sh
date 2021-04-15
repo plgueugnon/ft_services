@@ -30,5 +30,10 @@ echo "\033[32mBuild finished\033[0m"
 #docker exec -it wordpress sh
 #docker run --name phpmyadmin -d -p 5000:5000 phpmyadmin
 #docker exec -it phpmyadmin sh
-docker run --name mysql -d -p 3306:3306 mysql
-docker exec -it mysql sh
+#docker run --name mysql -d -p 3306:3306 mysql
+#docker exec -it mysql sh
+
+#kubctl -f ./srcs/nginx/nginx_deployment.yaml
+#kubctl -f ./srcs/mysql/mysql_deployment.yaml
+#kubctl -f ./srcs/phpmyadmin/php_deployment.yaml
+#kubctl -f ./srcs/wordpress/wp_deployment.yaml
