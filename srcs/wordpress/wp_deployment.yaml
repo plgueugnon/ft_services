@@ -12,7 +12,7 @@ spec:                     # desired state / tech config
   ports:
     - name: wordpress
       port: 5050
-      targetport: 5050
+      targetPort: 5050
       protocol: TCP
   selector:               # Allow to identify resources with the same label
     app: wordpress
@@ -34,11 +34,11 @@ spec:
     metadata:
       labels:
         app: wordpress
-  spec:
-    containers:           # define container
-    - name: wordpress
-      image: wordpress
-      imagePullPolicy: Never # Image will only be pulled localy
-      ports:
-      - containerPort: 5050
-        name: wordpress
+    spec:
+      containers:           # define container
+      - name: wordpress
+        image: wordpress
+        imagePullPolicy: Never # Image will only be pulled localy
+        ports:
+        - containerPort: 5050
+          name: wordpress

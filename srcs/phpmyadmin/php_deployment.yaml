@@ -12,7 +12,7 @@ spec:                     # desired state / tech config
   ports:
     - name: phpmyadmin
       port: 5000
-      targetport: 5000
+      targetPort: 5000
       protocol: TCP
   selector:               # Allow to identify resources with the same label
     app: phpmyadmin
@@ -34,11 +34,11 @@ spec:
     metadata:
       labels:
         app: phpmyadmin
-  spec:
-    containers:           # define container
-    - name: phpmyadmin
-      image: phpmyadmin
-      imagePullPolicy: Never # Image will only be pulled localy
-      ports:
-      - containerPort: 5000
-        name: phpmyadmin
+    spec:
+      containers:           # define container
+      - name: phpmyadmin
+        image: phpmyadmin
+        imagePullPolicy: Never # Image will only be pulled localy
+        ports:
+        - containerPort: 5000
+          name: phpmyadmin

@@ -28,7 +28,7 @@ RUN chmod +x /tmp/wp_init.sh
 EXPOSE 5050
 #RUN php-fpm7 
 #RUN nginx
-RUN sh /tmp/wp_init.sh
+CMD sh /tmp/wp_init.sh
 #CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
 #CMD sh /tmp/wp_init.sh 
-CMD sleep infinity
+#CMD sleep infinity

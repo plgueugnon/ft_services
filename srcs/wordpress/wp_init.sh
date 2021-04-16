@@ -2,7 +2,7 @@
 
 php-fpm7
 
-nginx -g 'daemon off'
+nginx -g 'daemon off;'
 
 # wp quick config
 

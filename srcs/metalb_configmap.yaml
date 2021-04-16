@@ -5,8 +5,8 @@ metadata:
   name: config
 data: 
   config: |
-  address-pools:
-  - name: default
+    address-pools:
+    - name: default
     protocol: layer2
     addresses:
     - 172.17.0.2-172.17.0.2

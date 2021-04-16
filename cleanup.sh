@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm log.txt
 docker kill $(docker ps -qa)
 docker rm $(docker ps -qa)
 #docker rmi alpine
