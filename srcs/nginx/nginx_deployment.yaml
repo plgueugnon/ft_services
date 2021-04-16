@@ -12,11 +12,11 @@ spec:                     # desired state / tech config
   ports:
     - name: http
       port: 80
-      targetport: 80
+      targetPort: 80
       protocol: TCP
     - name: https
       port: 443
-      targetport: 443
+      targetPort: 443
       protocol: TCP 
   selector:               # Allow to identify resources with the same label
     app: nginx
@@ -38,13 +38,13 @@ spec:
     metadata:
       labels:
         app: nginx
-  spec:
-    containers:           # define container
-    - name: nginx
-      image: nginx
-      imagePullPolicy: Never # Image will only be pulled localy
-      ports:
-      - containerPort: 80
-        name: http
-      - containerPort: 443
-        name: https
+    spec:
+      containers:           # define container
+      - name: nginx
+        image: nginx
+        imagePullPolicy: Never # Image will only be pulled localy
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
