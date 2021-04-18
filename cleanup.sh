@@ -33,3 +33,11 @@ docker rmi $(docker images -a)
 #docker log [containername]
 #tail -f /proc/<pid>/fd/1
 #tail -f /proc/<pid>/fd/2
+#kubectl get pods -n metallb-system
+#kubectl logs <controller-blablabla> -n metallb-system
+#kubectl get services
+#kubectl describe service <service>
+#minikube service <service> #--url
+#kubectl get events
+#sudo iptables-save
+

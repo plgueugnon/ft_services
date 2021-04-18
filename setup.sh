@@ -26,7 +26,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manife
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 kubectl apply -f ./srcs/metalb_configmap.yaml
 
-eval "$(minikube docker-env)"
+eval $(minikube docker-env)
 
 # Build docker images
 echo "\033[32mStarting to build - please wait while docker images are being built\033[0m"
@@ -47,7 +47,7 @@ echo "\033[32mBuild finished\033[0m"
 # docker run --name mysql -d -p 3306:3306 mysql
 # docker exec -it mysql sh
 
-kubectl apply -f ./srcs/nginx/nginx_deployment.yaml
 kubectl apply -f ./srcs/mysql/mysql_deployment.yaml
+kubectl apply -f ./srcs/nginx/nginx_deployment.yaml
 kubectl apply -f ./srcs/phpmyadmin/php_deployment.yaml
 kubectl apply -f ./srcs/wordpress/wp_deployment.yaml

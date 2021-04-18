@@ -2,9 +2,9 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: wordpress-service # name of my service - must be unique
+  name: wordpress         # name of my service - must be unique
   annotations:
-    metallb.universe.tf/allow-shared-ip: key
+    metallb.universe.tf/allow-shared-ip: "shared ip"
   labels:                 # use to register detailed info about resource
     app: wordpress        # tag info to find more easily a resource
 spec:                     # desired state / tech config
