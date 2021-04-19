@@ -14,14 +14,15 @@ then
     echo "user42" | sudo pkill mysql
     echo "\033[33mDone\033[0m"
 fi
-
+rm log.txt
+eval $(minikube docker-env -u)
 minikube delete
 
 # Launch minikube
 minikube start --vm-driver=docker
 
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
 # # On first install only
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 kubectl apply -f ./srcs/metalb_configmap.yaml
@@ -38,12 +39,12 @@ docker build -t phpmyadmin srcs/phpmyadmin/ >> log.txt
 docker build -t wordpress srcs/wordpress/ >> log.txt
 echo "\033[32mBuild finished\033[0m"
 
-#docker run --name nginx -d -p 80:80 -p 443:443 nginx
-#docker exec -it nginx sh
+# docker run --name nginx -d -p 80:80 -p 443:443 nginx
+# docker exec -it nginx sh
 # docker run --name wordpress -d -p 5050:5050 wordpress
 # docker exec -it wordpress sh
-#docker run --name phpmyadmin -d -p 5000:5000 phpmyadmin
-#docker exec -it phpmyadmin sh
+# docker run --name phpmyadmin -d -p 5000:5000 phpmyadmin
+# docker exec -it phpmyadmin sh
 # docker run --name mysql -d -p 3306:3306 mysql
 # docker exec -it mysql sh
 

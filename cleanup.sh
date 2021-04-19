@@ -31,6 +31,7 @@ docker rmi $(docker images -a)
 
 # Logs
 #docker log [containername]
+#docker service logs
 #tail -f /proc/<pid>/fd/1
 #tail -f /proc/<pid>/fd/2
 #kubectl get pods -n metallb-system
@@ -40,4 +41,7 @@ docker rmi $(docker images -a)
 #minikube service <service> #--url
 #kubectl get events
 #sudo iptables-save
+#ip a | grep "docker" |  awk '/inet/ {print $2}'
+#route
+#kubectl get ep
 

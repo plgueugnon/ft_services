@@ -5,13 +5,18 @@ FROM customlocalalpine
 # PHP-FPM is need for nginx to manage fast_CGI request from WP to MYSQL
 RUN apk update && apk add nginx \
 && mkdir -p /run/nginx \
+&& apk add openssl \
+&& openssl req -newkey rsa:4096 -sha256 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.pem -keyout /etc/ssl/private/key.pem -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=pgueugno/CN=localhost" \
 && apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session composer \
 && mkdir -p /var/www/localhost \
-&& wget -P /tmp/ https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
-&& tar -xzvf /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz -C /tmp/ \
-&& mv /tmp/phpMyAdmin-4.9.0.1-all-languages var/www/localhost/phpmyadmin \
-&& rm /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
+&& apk add phpmyadmin \
+#&& wget -P /tmp/ https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
+#&& tar -xzvf /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz -C /tmp/ \
+#&& mv /tmp/phpMyAdmin-4.9.0.1-all-languages var/www/localhost/phpmyadmin \
+#&& rm /tmp/phpMyAdmin-4.9.0.1-all-languages.tar.gz \
 && apk del wget \
+&& rm /etc/nginx/http.d/default.conf \
+#&& rm /var/www/localhost/phpmyadmin/config.sample.inc.php \
 && rm -rf /var/lib/apk/lists/* \
 && rm -f /sbin/apk \
 && rm -rf /etc/apk \
@@ -20,7 +25,11 @@ RUN apk update && apk add nginx \
 && rm -rf /var/lib/apk
 
 COPY ./phpmyadmin.conf /etc/nginx/http.d/
+COPY ./config.inc.php /usr/share/webapps/phpmyadmin/config.inc.php
+#COPY ./config.inc.php /var/www/localhost/phpmyadmin/
+COPY ./php_init.sh .
+RUN chmod +x /php_init.sh
 
 EXPOSE 5000
-RUN php-fpm7
-CMD ["nginx", "-g", "daemon off;"]
+#CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
+CMD ./php_init.sh

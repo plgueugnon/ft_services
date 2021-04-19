@@ -7,7 +7,8 @@ RUN apk update && apk add nginx \
 && mkdir -p /run/nginx \
 && apk add openssl \
 && openssl req -newkey rsa:4096 -sha256 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.pem -keyout /etc/ssl/private/key.pem -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=pgueugno/CN=localhost" \
-&& apk del --purge \
+&& apk del wget \
+&& rm /etc/nginx/http.d/default.conf \
 && rm -rf /var/lib/apk/lists/* \
 && rm -f /sbin/apk \
 && rm -rf /etc/apk \
@@ -25,5 +26,5 @@ COPY ./proxy.conf /etc/nginx/http.d/
 EXPOSE 80
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
-#CMD service nginx start \
+#CMD sleep infinity
 #&& tail -f /var/log/nginx/*.log

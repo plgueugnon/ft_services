@@ -7,9 +7,9 @@ data:
   config: |
     address-pools:
     - name: default
-    protocol: layer2
-    addresses:
-    - 172.17.0.2-172.17.0.2
+      protocol: layer2
+      addresses:
+      - 172.17.0.2/32
 # layer2 = all goes to one node
 # docker creates a subnet beginning with 172.17.0.2
 # we use CIDR writting to define only IP available to use for the loadbalancer
