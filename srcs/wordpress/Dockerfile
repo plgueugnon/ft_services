@@ -11,7 +11,7 @@ RUN apk update && apk add nginx \
 && mkdir -p /var/www/localhost/wordpress \
 && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp \
-&& wp core download --path=/var/www/localhost/wordpress/ --allow-root \
+&& wp core download --path=/var/www/localhost/wordpress/ \
 && apk del wget \
 && rm /etc/nginx/http.d/default.conf \
 && rm -rf /var/lib/apk/lists/* \
@@ -25,13 +25,16 @@ RUN apk update && apk add nginx \
 COPY ./wordpress.conf /etc/nginx/http.d/
 COPY ./wp_init.sh /tmp/
 RUN chmod +x /tmp/wp_init.sh
+#COPY ./wp-config.php /var/www/localhost/wordpress/
 
 #RUN wp core download --path=/var/www/localhost/wordpress/ --allow-root
 
 EXPOSE 5050
 #RUN php-fpm7 
 #RUN nginx
-CMD sh /tmp/wp_init.sh
+#RUN /tmp/wp_init.sh
+CMD /tmp/wp_init.sh
+#CMD [ "/bin/sh", "/tmp/wp_init.sh > script.log 2>&1" ]
 #CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
 #CMD sh /tmp/wp_init.sh 
 #CMD sleep infinity

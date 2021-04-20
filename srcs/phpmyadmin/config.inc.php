@@ -16,14 +16,15 @@ $i = 0;
  */
 $i++;
 /* Authentication type */
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
+#$cfg['Servers'][$i]['auth_type'] = 'cookie';
 /* Server parameters */
-#$cfg['Servers'][$i]['auth_type'] = 'config';
-#$cfg['Servers'][$i]['user'] = 'yo';
-#$cfg['Servers'][$i]['password'] = 'yopwd';
+$cfg['Servers'][$i]['auth_type'] = 'config';
+$cfg['Servers'][$i]['user'] = 'yo';
+$cfg['Servers'][$i]['password'] = 'yopwd';
 $cfg['Servers'][$i]['host'] = 'mysql';
+$cfg['Servers'][$i]['port'] = '3306';
 $cfg['Servers'][$i]['compress'] = false;
-#$cfg['Servers'][$i]['AllowNoPassword'] = true;
+$cfg['Servers'][$i]['AllowNoPassword'] = true;
 $cfg['PmaAbsoluteUri'] = './';
 
 ?>

@@ -45,3 +45,6 @@ docker rmi $(docker images -a)
 #route
 #kubectl get ep
 
+#manage pod/container
+#kubectl get pods
+#kubectl exec -it <pod name> -- /bin/sh

@@ -14,8 +14,8 @@ RUN apk add mariadb mariadb-common mariadb-client \
 COPY ./sql_init.sh .
 RUN chmod +x /sql_init.sh
 
-#COPY ./init_db.sh .
-#RUN chmod +x /init_db.sh
+COPY ./create_db.sh .
+RUN chmod +x /create_db.sh
 
 EXPOSE 3306
 #CMD sleep infinity
