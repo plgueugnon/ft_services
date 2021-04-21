@@ -18,5 +18,5 @@ COPY ./create_db.sh .
 RUN chmod +x /create_db.sh
 
 EXPOSE 3306
-#CMD sleep infinity
+#CMD ./sql_init.sh > script.log 2>&1
 CMD ./sql_init.sh

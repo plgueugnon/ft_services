@@ -25,16 +25,8 @@ RUN apk update && apk add nginx \
 COPY ./wordpress.conf /etc/nginx/http.d/
 COPY ./wp_init.sh /tmp/
 RUN chmod +x /tmp/wp_init.sh
-#COPY ./wp-config.php /var/www/localhost/wordpress/
-
-#RUN wp core download --path=/var/www/localhost/wordpress/ --allow-root
+COPY ./post.txt /tmp/
 
 EXPOSE 5050
-#RUN php-fpm7 
-#RUN nginx
-#RUN /tmp/wp_init.sh
+#CMD /tmp/wp_init.sh > script.log 2>&1
 CMD /tmp/wp_init.sh
-#CMD [ "/bin/sh", "/tmp/wp_init.sh > script.log 2>&1" ]
-#CMD php-fpm7 && ["nginx", "-g", "daemon off;"]
-#CMD sh /tmp/wp_init.sh 
-#CMD sleep infinity

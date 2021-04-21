@@ -6,7 +6,7 @@ FROM customlocalalpine
 RUN apk update && apk add nginx \
 && mkdir -p /run/nginx \
 && apk add openssl \
-&& openssl req -newkey rsa:4096 -sha256 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.pem -keyout /etc/ssl/private/key.pem -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=pgueugno/CN=localhost" \
+&& openssl req -newkey rsa:4096 -sha256 -x509 -days 365 -nodes -out /etc/ssl/certs/cert.pem -keyout /etc/ssl/private/key.pem -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=pgueugno/CN=nginx" \
 && apk del wget \
 && rm /etc/nginx/http.d/default.conf \
 && rm -rf /var/lib/apk/lists/* \
@@ -22,9 +22,7 @@ RUN apk update && apk add nginx \
 COPY ./index.html /var/www/localhost/
 COPY ./localhost.conf /etc/nginx/http.d/
 COPY ./proxy.conf /etc/nginx/http.d/
-#&& ./srcs/nginx/nginx.conf /etc/nginx/
-EXPOSE 80
-EXPOSE 443
+
+EXPOSE 80 443
+
 CMD ["nginx", "-g", "daemon off;"]
-#CMD sleep infinity
-#&& tail -f /var/log/nginx/*.log
