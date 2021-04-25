@@ -1,0 +1,74 @@
+# define mysql Service
+apiVersion: v1            # version of my k8s api
+kind: Service             # type of resource we want
+metadata:                 # info used to identify object
+  name: ftps              # name of my service - must be unique
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "shared ip"
+  labels:                 # use to register detailed info about resource
+    app: ftps             # tag info to find more easily a resource
+spec:                     # desired state / tech config
+  type: LoadBalancer      # state what type of IP
+  ports:
+    - name: ftp21         # TCP channel for connection
+      port: 21            # port used by pods to communicate with service
+      targetPort: 21      # pod port to which service sends requests to
+      protocol: TCP
+    - name: ftp20         # TCP channel for data transfer
+      port: 20            # port used by pods to communicate with service
+      targetPort: 20      # pod port to which service sends requests to
+      protocol: TCP
+    - name: ftp30021      # Passive ftp range
+      port: 30021         # port used by pods to communicate with service
+      targetPort: 30021   # pod port to which service sends requests to
+      protocol: TCP
+    - name: ftp30020
+      port: 30020         # port used by pods to communicate with service
+      targetPort: 30020   # pod port to which service sends requests to
+      protocol: TCP
+  selector:               # Allow to identify resources with the same label
+    app: ftps
+
+---
+
+# define  request for volume storage 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  accessModes:
+    - ReadWriteOnce     # Read & write rights on only one node
+  resources:
+    requests:
+      storage: 1Mi      # define volume size to be requested
+
+---
+
+# define image deployment instructions
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  labels:
+    app: ftps
+spec:
+  selector:
+    matchLabels:
+      app: ftps
+  template:
+    metadata:
+      labels:
+        app: ftps
+    spec:
+      containers:           # define container
+      - name: ftps
+        image: ftps
+        imagePullPolicy: Never # Image will only be pulled localy
+        ports:
+        - containerPort: 21
+        - containerPort: 20
+        - containerPort: 30020
+        - containerPort: 30021

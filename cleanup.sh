@@ -6,6 +6,7 @@ docker rm $(docker ps -qa)
 #docker rmi alpine
 #docker rmi nginx
 docker rmi $(docker images -a)
+#sudo apt autoremove lftp
 
 #Debug
 #sudo groupadd docker 
@@ -23,6 +24,10 @@ docker rmi $(docker images -a)
 #docker inspect --format '{{.State.Pid}}' [id container]
 #ps -a (while within a container)
 #top
+
+# testing connection to ftps
+# nc -zv 172.17.0.2 21
+# lftpd ftp://172.17.0.2:21
 
 # Inspect size
 #docker container ls -s
@@ -48,3 +53,7 @@ docker rmi $(docker images -a)
 #manage pod/container
 #kubectl get pods
 #kubectl exec -it <pod name> -- /bin/sh
+
+#Testing
+# curl -i https://172.17.0.2:5050 -k
+# filezilla ftp://yo:yopwd@172.17.0.2:21

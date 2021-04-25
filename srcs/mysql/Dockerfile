@@ -9,7 +9,8 @@ RUN apk add mariadb mariadb-common mariadb-client \
 && rm -rf /etc/apk \
 && rm -rf /lib/apk \
 && rm -rf /usr/share/apk \
-&& rm -rf /var/lib/apk
+&& rm -rf /var/lib/apk \
+&& rm -rf /var/cache/apk/*
 
 COPY ./sql_init.sh .
 RUN chmod +x /sql_init.sh

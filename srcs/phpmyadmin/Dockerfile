@@ -17,7 +17,8 @@ RUN apk update && apk add nginx \
 && rm -rf /etc/apk \
 && rm -rf /lib/apk \
 && rm -rf /usr/share/apk \
-&& rm -rf /var/lib/apk
+&& rm -rf /var/lib/apk \
+&& rm -rf /var/cache/apk/*
 
 COPY ./phpmyadmin.conf /etc/nginx/http.d/
 COPY ./config.inc.php /usr/share/webapps/phpmyadmin/config.inc.php

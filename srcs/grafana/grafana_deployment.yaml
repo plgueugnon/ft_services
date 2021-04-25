@@ -1,0 +1,50 @@
+# define mysql Service
+apiVersion: v1            # version of my k8s api
+kind: Service             # type of resource we want
+metadata:                 # info used to identify object
+  name: nginx             # name of my service - must be unique
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "shared ip"
+  labels:                 # use to register detailed info about resource
+    app: nginx            # tag info to find more easily a resource
+spec:                     # desired state / tech config
+  type: LoadBalancer      # state what type of IP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 443
+      protocol: TCP 
+  selector:               # Allow to identify resources with the same label
+    app: nginx
+
+---
+
+# define image deployment instructions
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:           # define container
+      - name: nginx
+        image: nginx
+        imagePullPolicy: Never # Image will only be pulled localy
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https

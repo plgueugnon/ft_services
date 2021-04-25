@@ -19,7 +19,8 @@ RUN apk update && apk add nginx \
 && rm -rf /etc/apk \
 && rm -rf /lib/apk \
 && rm -rf /usr/share/apk \
-&& rm -rf /var/lib/apk
+&& rm -rf /var/lib/apk \
+&& rm -rf /var/cache/apk/*
 
 # Copy nginx server conf file specifying rules for all webpages
 COPY ./wordpress.conf /etc/nginx/http.d/
