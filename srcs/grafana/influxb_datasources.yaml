@@ -1,0 +1,53 @@
+# # config file version
+apiVersion: 1
+
+# # list of datasources to insert/update depending
+# # on what's available in the database
+datasources:
+#   # <string, required> name of the datasource. Required
+  - name: influxdb
+#   # <string, required> datasource type. Required
+    type: influxdb
+#   # <string, required> access mode. direct or proxy. Required
+    access: proxy
+#   # <string> url
+    url: http://influxdb:8086
+#   # <string> database name, if used
+    database: influxdb
+    editable: false
+  - name: grafana
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: grafana
+    editable: false
+  - name: wordpress
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: wordpress
+    editable: false
+  - name: phpmyadmin
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: phpmyadmin
+    editable: false
+  - name: nginx
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: nginx
+    editable: false
+  - name: mysql
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: mysql
+    editable: false
+  - name: ftps
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: ftps
+    editable: false

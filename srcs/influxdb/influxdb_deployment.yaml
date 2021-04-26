@@ -2,18 +2,18 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: mysql     # name of my service - must be unique
+  name: influxb     # name of my service - must be unique
   labels:                 # use to register detailed info about resource
-    app: mysql            # tag info to find more easily a resource
+    app: influxdb            # tag info to find more easily a resource
 spec:
   type: ClusterIP         # state what type of IP = internal cluster IP here
   ports:
-  - port: 3306
+  - port: 8086
     protocol: TCP
-    targetPort: 3306
-    name: mysql
+    targetPort: 8086
+    name: influxdb
   selector:               # Allow to identify resources with the same label
-    app: mysql
+    app: influxdb
 
 ---
 
@@ -21,9 +21,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql
+  name: influxdb
   labels:
-    app: mysql
+    app: influxdb
 spec:
   accessModes:
     - ReadWriteOnce     # Read & write rights on only one node
@@ -37,29 +37,29 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: influxdb
   labels:
-    app: mysql
+    app: influxdb
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: influxdb
   template:
     metadata:
       labels:
-        app: mysql
+        app: influxdb
     spec:
       containers:         # define container
-      - name: mysql
-        image: mysql
+      - name: influxdb
+        image: influxdb
         imagePullPolicy: Never # Image will only be pulled localy
         ports:
-        - containerPort: 3306
-          name: mysql
+        - containerPort: 8086
+          name: influxdb
         volumeMounts:     # define where PV is mounted in container
-        - mountPath: /var/lib/mysql
-          name: mysql
+        - mountPath: /var/lib/influxdb
+          name: influxdb
       volumes:            # define PV linked with PVC
-      - name: mysql
+      - name: influxdb
         persistentVolumeClaim:
-          claimName: mysql
+          claimName: influxdb

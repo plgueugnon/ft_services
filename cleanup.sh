@@ -6,7 +6,7 @@ docker rm $(docker ps -qa)
 #docker rmi alpine
 #docker rmi nginx
 docker rmi $(docker images -a)
-#sudo apt autoremove lftp
+#sudo apt remove lftp
 
 #Debug
 #sudo groupadd docker 

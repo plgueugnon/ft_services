@@ -3,13 +3,15 @@
 # If necessary kill process using port 3306
 #sudo kill "$(sudo lsof -t -i:3306)"
 
+sed -i 's/database = "telegraf"/database = "mysql"/' /etc/telegraf/telegraf.conf
+
 # open mysql to all incoming connection
 sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
 
 # Initialize main standard sql database and user as per alpine reco
 /usr/bin/mysql_install_db --user=mysql --datadir="/var/lib/mysql"
 
-# Launch mysql in daemon safe mode #and exit right after 
+# Launch mysql in daemon safe mode and exit mysqld right after start 
 /usr/bin/mysqld_safe --datadir=/var/lib/mysql --no-watch
 
 # We wait until mysql is up - then we will be able to config it
@@ -22,4 +24,6 @@ done
 # Config mysql
 ./create_db.sh
 
-tail -F /tmp/sql.log
+telegraf &
+
+tail -f /tmp/sql.log

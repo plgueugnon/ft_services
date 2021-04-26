@@ -2,24 +2,36 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: nginx             # name of my service - must be unique
+  name: grafana             # name of my service - must be unique
   annotations:
     metallb.universe.tf/allow-shared-ip: "shared ip"
   labels:                 # use to register detailed info about resource
-    app: nginx            # tag info to find more easily a resource
+    app: grafana           # tag info to find more easily a resource
 spec:                     # desired state / tech config
   type: LoadBalancer      # state what type of IP
   ports:
-    - name: http
-      port: 80
-      targetPort: 80
-      protocol: TCP
-    - name: https
-      port: 443
-      targetPort: 443
+    - name: grafana
+      port: 3000
+      targetPort: 3000
       protocol: TCP 
   selector:               # Allow to identify resources with the same label
-    app: nginx
+    app: grafana
+
+---
+
+# define mysql request for volume storage 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  accessModes:
+    - ReadWriteOnce     # Read & write rights on only one node
+  resources:
+    requests:
+      storage: 1Gi      # define volume size to be requested
 
 ---
 
@@ -27,24 +39,29 @@ spec:                     # desired state / tech config
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: grafana
   labels:
-    app: nginx
+    app: grafana
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: grafana
   template:
     metadata:
       labels:
-        app: nginx
+        app: grafana
     spec:
-      containers:           # define container
-      - name: nginx
-        image: nginx
+      containers:         # define container
+      - name: grafana
+        image: grafana
         imagePullPolicy: Never # Image will only be pulled localy
         ports:
-        - containerPort: 80
-          name: http
-        - containerPort: 443
-          name: https
+        - containerPort: 3000
+          name: grafana
+        volumeMounts:     # define where PV is mounted in container
+        - mountPath: /usr/share/grafana
+          name: grafana
+      volumes:            # define PV linked with PVC
+      - name: grafana
+        persistentVolumeClaim:
+          claimName: grafana

@@ -23,7 +23,12 @@ RUN apk update && apk add nginx \
 COPY ./index.html /var/www/localhost/
 COPY ./localhost.conf /etc/nginx/http.d/
 COPY ./proxy.conf /etc/nginx/http.d/
+COPY ./nginx_init.sh /tmp/
+RUN chmod +x /tmp/nginx_init.sh
 
 EXPOSE 80 443
 
-CMD ["nginx", "-g", "daemon off;"]
+#RUN  sed -i 's/database = "telegraf"/database = "nginx"/' /etc/telegraf/telegraf.conf
+
+#CMD ["nginx", "-g", "daemon off;"]
+CMD /tmp/nginx_init.sh

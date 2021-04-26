@@ -1,7 +1,7 @@
 FROM customlocalalpine
 # We get a copy of a custom alpine image created just before
 
-RUN apk add mariadb mariadb-common mariadb-client \
+RUN apk update && apk add mariadb mariadb-common mariadb-client \
 #&& mkdir -p /run/mysqld \
 && apk del wget \
 && rm -rf /var/lib/apk/lists/* \
