@@ -57,3 +57,6 @@ docker rmi $(docker images -a)
 #Testing
 # curl -i https://172.17.0.2:5050 -k
 # filezilla ftp://yo:yopwd@172.17.0.2:21
+
+#kubectl -n default exec -ti busybox -- nslookup kubernetes.default
+#kubectl -n default exec -ti busybox -- nslookup svc.cluster.local

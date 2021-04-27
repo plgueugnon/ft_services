@@ -2,11 +2,12 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: influxb     # name of my service - must be unique
+  name: influxb-svc     # name of my service - must be unique
   labels:                 # use to register detailed info about resource
     app: influxdb            # tag info to find more easily a resource
 spec:
   type: ClusterIP         # state what type of IP = internal cluster IP here
+  clusterIP: 10.96.172.235
   ports:
   - port: 8086
     protocol: TCP

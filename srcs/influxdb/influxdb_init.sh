@@ -1,5 +1,5 @@
 #!/bin/sh
 
-telegraf &
+#telegraf &
 
-exec influxd run -config /etc/influxdb.conf
+exec influxd

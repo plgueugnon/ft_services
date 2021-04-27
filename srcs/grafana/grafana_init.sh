@@ -1,7 +1,9 @@
 #!/bin/sh
 
-sed -i 's/database = "telegraf"/database = "grafana"/' /etc/telegraf/telegraf.conf
+#sed -i 's/database = "telegraf"/database = "grafana"/' /etc/telegraf/telegraf.conf
 
-telegraf &
+exec /tmp/grafana-7.5.4/bin/grafana-server --config=/tmp/grafana-7.5.4/conf/grafana.ini --homepath /tmp/grafana-7.5.4/
 
-exec grafana-server --config=/usr/share/grafana/conf/grafana.ini --homepath /usr/share/grafana/
+#telegraf
+
+#exec /tmp/grafana-7.5.4/bin/grafana-server --config=/tmp/grafana-7.5.4/conf/grafana.ini --homepath /tmp/grafana-7.5.4/

@@ -1,9 +1,9 @@
 #!/bin/sh
 
-sed -i 's/database = "telegraf"/database = "nginx"/' /etc/telegraf/telegraf.conf
+#sed -i 's/database = "telegraf"/database = "nginx"/' /etc/telegraf/telegraf.conf
 
 nginx
 
-telegraf &
+#telegraf &
 
 tail -f /var/log/nginx/*.log

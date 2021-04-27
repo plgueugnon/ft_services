@@ -12,11 +12,11 @@ wp theme activate twentytwenty --path=/var/www/localhost/wordpress/
 wp option update blogdescription "ft_services nearly killed me" --path=/var/www/localhost/wordpress/
 wp post create /tmp/post.txt --post_title="Aller correcteur soit cool!" --post_excerpt="Soit sympa!" --post_status=publish --path=/var/www/localhost/wordpress/
 
- sed -i 's/database = "telegraf"/database = "wordpress"/' /etc/telegraf/telegraf.conf
+# sed -i 's/database = "telegraf"/database = "wordpress"/' /etc/telegraf/telegraf.conf
 
 php-fpm7
 nginx
 
-telegraf &
+#telegraf &
 
 tail -f /var/log/nginx/*.log

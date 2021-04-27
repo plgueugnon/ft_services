@@ -30,7 +30,7 @@ then
     echo "${GRE}Great Filezilla is already installed :-)${NC}"
 else
     echo "${YEL}Installing Filezilla${NC}"
-    echo -e "user42\nO" | sudo apt install filezilla
+    printf "%s\n" user42 O | sudo apt install filezilla
     echo "${GRE}Done !${NC}"
 fi
 
@@ -57,13 +57,14 @@ eval $(minikube docker-env)
 echo "${GRE}Starting to build - please wait while docker images are being built${NC}"
 touch log.txt
 docker build -t customlocalalpine srcs/base/ >> log.txt
+docker build -t telegraf srcs/telegraf/ >> log.txt
 docker build -t ftps srcs/ftps/ >> log.txt
+docker build -t influxdb srcs/influxdb/ >> log.txt
+docker build -t grafana srcs/grafana/ >> log.txt
 docker build -t mysql srcs/mysql/ >> log.txt
 docker build -t nginx srcs/nginx/ >> log.txt
 docker build -t phpmyadmin srcs/phpmyadmin/ >> log.txt
 docker build -t wordpress srcs/wordpress/ >> log.txt
-docker build -t influxdb srcs/influxdb/ >> log.txt
-docker build -t grafana srcs/grafana/ >> log.txt
 echo "${GRE}Build finished${NC}"
 
 # docker run --name nginx -d -p 80:80 -p 443:443 nginx
@@ -82,11 +83,12 @@ echo "${GRE}Build finished${NC}"
 # docker exec -it grafana sh
 
 echo "${GRE}Applying yaml config files - please wait while pods are being created${NC}"
+kubectl apply -f ./srcs/telegraf/telegraf_deployment.yaml
+kubectl apply -f ./srcs/influxdb/influxdb_deployment.yaml
+kubectl apply -f ./srcs/grafana/grafana_deployment.yaml
 kubectl apply -f ./srcs/ftps/ftps_deployment.yaml
 kubectl apply -f ./srcs/mysql/mysql_deployment.yaml
 kubectl apply -f ./srcs/nginx/nginx_deployment.yaml
 kubectl apply -f ./srcs/phpmyadmin/php_deployment.yaml
 kubectl apply -f ./srcs/wordpress/wp_deployment.yaml
-kubectl apply -f ./srcs/influxdb/influxdb_deployment.yaml
-kubectl apply -f ./srcs/grafana/grafana_deployment.yaml
 echo "${GRE}Pods created${NC}"

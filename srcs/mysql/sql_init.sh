@@ -3,7 +3,7 @@
 # If necessary kill process using port 3306
 #sudo kill "$(sudo lsof -t -i:3306)"
 
-sed -i 's/database = "telegraf"/database = "mysql"/' /etc/telegraf/telegraf.conf
+#sed -i 's/database = "telegraf"/database = "mysql"/' /etc/telegraf/telegraf.conf
 
 # open mysql to all incoming connection
 sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
@@ -24,6 +24,6 @@ done
 # Config mysql
 ./create_db.sh
 
-telegraf &
+#telegraf &
 
 tail -f /tmp/sql.log

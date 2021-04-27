@@ -59,7 +59,7 @@ spec:
         - containerPort: 3000
           name: grafana
         volumeMounts:     # define where PV is mounted in container
-        - mountPath: /usr/share/grafana
+        - mountPath: /tmp/grafana-7.5.4/data
           name: grafana
       volumes:            # define PV linked with PVC
       - name: grafana

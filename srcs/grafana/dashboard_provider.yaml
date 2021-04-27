@@ -5,4 +5,4 @@ providers:
     folder: ''
     type: file
     options:
-      path:  /usr/share/grafana/conf/provisioning/dashboards/data
+      path:  /tmp/grafana-7.5.4/conf/provisioning/dashboards/data
