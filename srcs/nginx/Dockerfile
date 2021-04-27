@@ -20,15 +20,10 @@ RUN apk update && apk add nginx \
 # Copy  1-custom nginx welcome page
 #       2-nginx server conf file specifying rules for all webpages
 #       3-nginx proxy conf file
-COPY ./index.html /var/www/localhost/
-COPY ./localhost.conf /etc/nginx/http.d/
-COPY ./proxy.conf /etc/nginx/http.d/
-COPY ./nginx_init.sh /tmp/
-RUN chmod +x /tmp/nginx_init.sh
+COPY ./srcs/index.html /var/www/localhost/
+COPY ./srcs/localhost.conf /etc/nginx/http.d/
+COPY ./srcs/proxy.conf /etc/nginx/http.d/
 
 EXPOSE 80 443
 
-#RUN  sed -i 's/database = "telegraf"/database = "nginx"/' /etc/telegraf/telegraf.conf
-
-#CMD ["nginx", "-g", "daemon off;"]
-CMD /tmp/nginx_init.sh
+CMD ["nginx", "-g", "daemon off;"]

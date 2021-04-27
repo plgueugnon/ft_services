@@ -23,11 +23,14 @@ RUN apk update && apk add nginx \
 && rm -rf /var/cache/apk/*
 
 # Copy nginx server conf file specifying rules for all webpages
-COPY ./wordpress.conf /etc/nginx/http.d/
-COPY ./wp_init.sh /tmp/
-RUN chmod +x /tmp/wp_init.sh
+COPY ./srcs/wordpress.conf /etc/nginx/http.d/
+COPY ./srcs/wp_init.sh /tmp/
+COPY ./srcs/liveness_probe.sh /tmp
+RUN chmod +x /tmp/wp_init.sh && chmod +x /tmp/liveness_probe.sh
 COPY ./post.txt /tmp/
 
 EXPOSE 5050
+
+# Uncomment if need to debug script
 #CMD /tmp/wp_init.sh > script.log 2>&1
 CMD /tmp/wp_init.sh

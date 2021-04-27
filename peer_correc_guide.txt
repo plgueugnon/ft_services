@@ -1,0 +1,22 @@
+Petit guide de correction pour le correcteur
+
+STEP 1
+----Verifier les services existants et le type d'IP utilise:
+kubectl get services
+
+----Verifier les pods et leur statut (restart):
+kubectl get pods
+
+----Ouvrir le dashboard minikube:
+minikube dashboard
+(appuyer sur ctrl z ensuite pour continuer d'operer librement sur le terminal)
+
+
+
+kubectl exec -it $(kubectl get pods | grep influxdb | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep influxdb | awk '{print $1}') -- pkill influxd
+
+
+
+
+sudo apt install filezilla

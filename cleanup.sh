@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm log.txt
+rm log.log
 docker kill $(docker ps -qa)
 docker rm $(docker ps -qa)
 #docker rmi alpine
@@ -53,6 +53,7 @@ docker rmi $(docker images -a)
 #manage pod/container
 #kubectl get pods
 #kubectl exec -it <pod name> -- /bin/sh
+#kubectl exec -it <pod name> -- ps = to watch process inside pod
 
 #Testing
 # curl -i https://172.17.0.2:5050 -k
@@ -60,3 +61,5 @@ docker rmi $(docker images -a)
 
 #kubectl -n default exec -ti busybox -- nslookup kubernetes.default
 #kubectl -n default exec -ti busybox -- nslookup svc.cluster.local
+
+#kubectl exec -it $(kubectl get pods | grep grafana | awk '{print $1}') -- ps

@@ -1,8 +1,8 @@
 FROM customlocalalpine
 # We get a copy of a custom alpine image created just before
 
+# Downloading and installing mariadb packages
 RUN apk update && apk add mariadb mariadb-common mariadb-client \
-#&& mkdir -p /run/mysqld \
 && apk del wget \
 && rm -rf /var/lib/apk/lists/* \
 && rm -f /sbin/apk \
@@ -12,12 +12,12 @@ RUN apk update && apk add mariadb mariadb-common mariadb-client \
 && rm -rf /var/lib/apk \
 && rm -rf /var/cache/apk/*
 
-COPY ./sql_init.sh .
-RUN chmod +x /sql_init.sh
-
-COPY ./create_db.sh .
-RUN chmod +x /create_db.sh
+COPY ./srcs/sql_init.sh .
+COPY ./srcs/liveness_probe.sh /tmp/
+COPY ./srcs/create_db.sh .
+RUN chmod +x /create_db.sh && chmod +x /sql_init.sh && chmod + x liveness_probe.sh /tmp/
 
 EXPOSE 3306
+# Uncomment if need to debug script
 #CMD ./sql_init.sh > script.log 2>&1
 CMD ./sql_init.sh

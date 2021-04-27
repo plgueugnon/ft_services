@@ -2,7 +2,7 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: mysql     # name of my service - must be unique
+  name: mysql             # name of my service - must be unique
   labels:                 # use to register detailed info about resource
     app: mysql            # tag info to find more easily a resource
 spec:
@@ -56,6 +56,13 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - /tmp/liveness_probe.sh
+          initialDelaySeconds: 10
+          periodSeconds: 3
         volumeMounts:     # define where PV is mounted in container
         - mountPath: /var/lib/mysql
           name: mysql

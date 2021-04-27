@@ -1,0 +1,13 @@
+# # config file version
+apiVersion: 1
+
+# # list of datasources to insert/update depending
+# # on what's available in the database
+datasources:
+    - name: telegraf
+      orgId: 1
+      type: influxdb
+      access: proxy
+      url: http://10.96.172.235:8086
+      database: telegraf
+      editable: true

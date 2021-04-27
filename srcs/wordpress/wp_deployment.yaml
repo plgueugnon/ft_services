@@ -42,3 +42,10 @@ spec:
         ports:
         - containerPort: 5050
           name: wordpress
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - /tmp/liveness_probe.sh
+          initialDelaySeconds: 10
+          periodSeconds: 3

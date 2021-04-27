@@ -20,11 +20,14 @@ RUN apk update && apk add nginx \
 && rm -rf /var/lib/apk \
 && rm -rf /var/cache/apk/*
 
-COPY ./phpmyadmin.conf /etc/nginx/http.d/
-COPY ./config.inc.php /usr/share/webapps/phpmyadmin/config.inc.php
-COPY ./php_init.sh .
-RUN chmod +x /php_init.sh
+COPY ./srcs/phpmyadmin.conf /etc/nginx/http.d/
+COPY ./srcs/config.inc.php /usr/share/webapps/phpmyadmin/config.inc.php
+COPY ./srcs/php_init.sh /tmp/
+COPY ./srcs/liveness_probe.sh /tmp/
+RUN chmod +x /tmp/php_init.sh && chmod +x /tmp/liveness_probe.sh
 
 EXPOSE 5000
+
+# Uncomment if need to debug script
 #CMD ./php_init.sh > script.log 2>&1
-CMD ./php_init.sh
+CMD ./tmp/php_init.sh

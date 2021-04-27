@@ -43,7 +43,7 @@ spec:
     - ReadWriteOnce     # Read & write rights on only one node
   resources:
     requests:
-      storage: 1Mi      # define volume size to be requested
+      storage: 1Gi      # define volume size to be requested
 
 ---
 
@@ -72,3 +72,17 @@ spec:
         - containerPort: 20
         - containerPort: 30020
         - containerPort: 30021
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - /tmp/liveness_probe.sh
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        volumeMounts:     # define where PV is mounted in container
+        - mountPath: /home/yo/
+          name: ftps
+      volumes:            # define PV linked with PVC
+      - name: ftps
+        persistentVolumeClaim:
+          claimName: ftps

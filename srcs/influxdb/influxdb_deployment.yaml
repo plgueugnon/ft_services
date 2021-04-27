@@ -2,12 +2,12 @@
 apiVersion: v1            # version of my k8s api
 kind: Service             # type of resource we want
 metadata:                 # info used to identify object
-  name: influxb-svc     # name of my service - must be unique
+  name: influxb           # name of my service - must be unique
   labels:                 # use to register detailed info about resource
     app: influxdb            # tag info to find more easily a resource
 spec:
   type: ClusterIP         # state what type of IP = internal cluster IP here
-  clusterIP: 10.96.172.235
+  clusterIP: 10.96.172.235 # due to alpine bug with DNS management, we have to force cluster IP
   ports:
   - port: 8086
     protocol: TCP
@@ -58,7 +58,7 @@ spec:
         - containerPort: 8086
           name: influxdb
         volumeMounts:     # define where PV is mounted in container
-        - mountPath: /var/lib/influxdb
+        - mountPath: /root/.influxdb
           name: influxdb
       volumes:            # define PV linked with PVC
       - name: influxdb
