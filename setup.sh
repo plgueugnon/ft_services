@@ -23,17 +23,6 @@ then
     echo "${GRE}Done !${NC}"
 fi
 
-# # Dowloading filezilla to test ftp server later
-# echo "${YEL}Checking if you have Filezilla${NC}"
-# if filezilla -v | grep -oq FileZilla > /dev/null 2>&1;
-# then
-#     echo "${GRE}Great Filezilla is already installed :-)${NC}"
-# else
-#     echo "${YEL}Installing Filezilla${NC}"
-#     printf "%s\n" user42 O | sudo apt install filezilla
-#     echo "${GRE}Done !${NC}"
-# fi
-
 rm log.log
 eval $(minikube docker-env -u)
 minikube delete

@@ -27,7 +27,7 @@ COPY ./srcs/wordpress.conf /etc/nginx/http.d/
 COPY ./srcs/wp_init.sh /tmp/
 COPY ./srcs/liveness_probe.sh /tmp
 RUN chmod +x /tmp/wp_init.sh && chmod +x /tmp/liveness_probe.sh
-COPY ./post.txt /tmp/
+COPY ./srcs/post.txt /tmp/
 
 EXPOSE 5050
 

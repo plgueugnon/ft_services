@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rm log.log
+minikube delete
 docker kill $(docker ps -qa)
 docker rm $(docker ps -qa)
 #docker rmi alpine

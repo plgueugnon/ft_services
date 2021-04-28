@@ -15,7 +15,7 @@ RUN apk update && apk add mariadb mariadb-common mariadb-client \
 COPY ./srcs/sql_init.sh .
 COPY ./srcs/liveness_probe.sh /tmp/
 COPY ./srcs/create_db.sh .
-RUN chmod +x /create_db.sh && chmod +x /sql_init.sh && chmod + x liveness_probe.sh /tmp/
+RUN chmod +x /create_db.sh && chmod +x /sql_init.sh && chmod +x /tmp/liveness_probe.sh
 
 EXPOSE 3306
 # Uncomment if need to debug script

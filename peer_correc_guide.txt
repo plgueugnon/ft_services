@@ -8,15 +8,64 @@ kubectl get services
 kubectl get pods
 
 ----Ouvrir le dashboard minikube:
-minikube dashboard
+minikube dashboard &
 (appuyer sur ctrl z ensuite pour continuer d'operer librement sur le terminal)
 
+STEP 2 - NGINX
 
+curl -I http://172.17.0.2:80
+curl -I https://172.17.0.2:443
+curl -I http://172.17.0.2/wordpress
+curl -I http://172.17.0.2/phpmyadmin
 
+STEP 3 - FTPS
+sudo apt install filezilla
+filezilla ftp://yo:yopwd@172.17.0.2:21
+
+STEP 4 - WORDPRESS, MYSQL & PHPMYADMIN
+minikube service wordpress
+minikube service phpmyadmin
+----Pour forcer le pod mysql a redemarrer
+kubectl exec -it $(kubectl get pods | grep mysql | awk '{print $1}') -- pkill mariadb
+----Ou alors supprimer carrement le pod depuis le dashboard ou via la cmd
+kubectl delete -n default pod $(kubectl get pods | grep mysql | awk '{print $1}')
+
+STEP 5 - GRAFANA & INFLUXDB
+---- Acceder a grafana (la connection est securise donc pas en http sinon cela va echouer)
+https://172.17.0.2:3000
+
+STEP 6 - PERSISTANCE
+
+---- Voir les process et kill le ou les process cles du container
+---- Il faut attendre plusieurs sec que la livenessprobe detecte la defaillance et relance le pod
+---- La relance du pod est visible sur le dashboard ou via la cmd kubectl get pods
+
+INFLUXDB
 kubectl exec -it $(kubectl get pods | grep influxdb | awk '{print $1}') -- ps
 kubectl exec -it $(kubectl get pods | grep influxdb | awk '{print $1}') -- pkill influxd
 
+MYSQL
+kubectl exec -it $(kubectl get pods | grep mysql | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep mysql | awk '{print $1}') -- pkill mariadb
 
+GRAFANA
+kubectl exec -it $(kubectl get pods | grep grafana | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep grafana | awk '{print $1}') -- pkill grafana
 
+FTPS
+kubectl exec -it $(kubectl get pods | grep ftps | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep ftps | awk '{print $1}') -- pkill vsftpd
 
-sudo apt install filezilla
+NGINX
+kubectl exec -it $(kubectl get pods | grep nginx | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep nginx | awk '{print $1}') -- pkill nginx
+
+PHPMYADMIN
+kubectl exec -it $(kubectl get pods | grep phpmyadmin | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep phpmyadmin | awk '{print $1}') -- pkill php-fpm7
+kubectl exec -it $(kubectl get pods | grep phpmyadmin | awk '{print $1}') -- pkill nginx
+
+WORDPRESS
+kubectl exec -it $(kubectl get pods | grep wordpress | awk '{print $1}') -- ps
+kubectl exec -it $(kubectl get pods | grep wordpress | awk '{print $1}') -- pkill php-fpm7
+kubectl exec -it $(kubectl get pods | grep wordpress | awk '{print $1}') -- pkill nginx
